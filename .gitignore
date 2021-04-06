@@ -16,6 +16,8 @@ vendor
 node_modules/
 dist/
 
+TypeScript/**/*.js
+
 # Compiled Java class files
 *.class
 
