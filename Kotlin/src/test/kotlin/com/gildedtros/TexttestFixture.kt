@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
             Item("Long Methods", 3, 6),
             Item("Ugly Variable Names", 3, 6))
 
-val app = GildedTros(items)
+    val app = GildedTros(items)
 
     var days = 2
     if (args.size > 0) {
@@ -34,6 +34,5 @@ val app = GildedTros(items)
         println()
         app.updateQuality()
     }
-
 
 }

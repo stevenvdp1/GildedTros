@@ -56,4 +56,3 @@ class GildedTros(var items: Array<Item>) {
     }
 
 }
-

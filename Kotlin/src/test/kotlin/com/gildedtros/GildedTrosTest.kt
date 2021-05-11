@@ -12,9 +12,6 @@ internal class GildedTrosTest {
         val app = GildedTros(items)
         app.updateQuality()
         assertEquals("fixme", app.items[0].name)
-
     }
 
 }
-
-
