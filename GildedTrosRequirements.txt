@@ -24,7 +24,7 @@ Pretty simple, right? Well this is where it gets interesting:
 			Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
 			Quality drops to 0 after the conference
 
-Due to high demand of items, we have recently signed a contract with a cheap off-shore consultancy firm (it's name was Kegeca or something).
+Due to high demand of items, we have recently signed a contract with a cheap off-shore consultancy firm.
 They provide us with usable items, but they smell kinda strange.
 This requires an update to our system:
 
