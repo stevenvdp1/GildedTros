@@ -22,6 +22,16 @@ namespace GildedTros.App
         //B-DAWG Keychain TESTS:
         //never changes???
         [InlineData("B-DAWG Keychain", 10, 10, 10, 10)]
+        //Backstage passes TESTS:
+        //Quality increases by 1 when there are 10 days or more
+        //Quality increases by 2 when there are 10 days or less
+        //Quality increases by 3 when there are 5 days or less
+        //Quality drops to 0 after the conference
+        [InlineData("Backstage passes for HAXX", 15, 10, 14, 11)]
+        [InlineData("Backstage passes for HAXX", 10, 10, 9, 12)]
+        [InlineData("Backstage passes for HAXX", 5, 10, 4, 13)]
+        [InlineData("Backstage passes for HAXX", 0, 10, -1, 0)]
+
         public void UpdateQuality(string name, int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
             IList<Item> Items = new List<Item> { new Item { Name = name, SellIn = sellIn, Quality = quality } };
