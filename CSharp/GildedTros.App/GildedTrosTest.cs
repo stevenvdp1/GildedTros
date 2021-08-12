@@ -12,13 +12,16 @@ namespace GildedTros.App
         [InlineData("foo", 10, 10, 9, 9)]
         [InlineData("foo", 0, 0, -1, 0)]
         [InlineData("foo", -1, 10, -2, 8)]
-        //Good Wine TESTS
+        //Good Wine TESTS:
         //Quality increases
         //Quality not more than 50
         //Quality increases x2 when date has passed
         [InlineData("Good Wine", 2, 2, 1, 3)]
         [InlineData("Good Wine", 2, 50, 1, 50)]
         [InlineData("Good Wine", -1, 10, -2, 12)]
+        //B-DAWG Keychain TESTS:
+        //never changes???
+        [InlineData("B-DAWG Keychain", 10, 10, 10, 10)]
         public void UpdateQuality(string name, int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
             IList<Item> Items = new List<Item> { new Item { Name = name, SellIn = sellIn, Quality = quality } };
