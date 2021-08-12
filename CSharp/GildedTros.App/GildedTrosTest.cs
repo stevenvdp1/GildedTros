@@ -21,7 +21,7 @@ namespace GildedTros.App
         [InlineData("Good Wine", -1, 10, -2, 12)]
         //B-DAWG Keychain TESTS:
         //never changes???
-        [InlineData("B-DAWG Keychain", 10, 10, 10, 10)]
+        [InlineData("B-DAWG Keychain", 10, 80, 10, 80)]
         //Backstage passes TESTS:
         //Quality increases by 1 when there are 10 days or more
         //Quality increases by 2 when there are 10 days or less
@@ -31,7 +31,10 @@ namespace GildedTros.App
         [InlineData("Backstage passes for HAXX", 10, 10, 9, 12)]
         [InlineData("Backstage passes for HAXX", 5, 10, 4, 13)]
         [InlineData("Backstage passes for HAXX", 0, 10, -1, 0)]
-
+        //Smelly items TESTS:
+        //degrade in Quality twice as fast as normal items
+        [InlineData("Duplicate Code", 10, 10, 9, 8)]
+        [InlineData("Duplicate Code", 0, 10, -1, 4)]
         public void UpdateQuality(string name, int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
             IList<Item> Items = new List<Item> { new Item { Name = name, SellIn = sellIn, Quality = quality } };
