@@ -5,26 +5,18 @@ namespace GildedTros.App
 {
     public class GildedTrosTest
     {
-        [Fact]
-        public void QualityAndSellInnDecrease()
+        [Theory]
+        [InlineData("foo", 10, 10,9 ,9)]
+        [InlineData("foo", 0, 0, -1,0)]
+        [InlineData("foo", -1, 10, -2,8)]
+        public void UpdateQuality(string name,int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 10, Quality = 10 } };
+            IList<Item> Items = new List<Item> { new Item { Name = name, SellIn = sellIn, Quality = quality }  };
             GildedTros app = new GildedTros(Items);
             app.UpdateQuality();
-            Assert.Equal("foo", Items[0].Name);
-            Assert.Equal(9, Items[0].Quality);
-            Assert.Equal(9, Items[0].SellIn);
-        }
-
-        [Fact]
-        public void SellInnDecreasesQualityCannotBeNegative()
-        {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-            GildedTros app = new GildedTros(Items);
-            app.UpdateQuality();
-            Assert.Equal("foo", Items[0].Name);
-            Assert.Equal(-1, Items[0].SellIn);
-            Assert.Equal(0, Items[0].Quality);
+            Assert.Equal(name, Items[0].Name);
+            Assert.Equal(expectedSellIn, Items[0].SellIn);
+            Assert.Equal(expectedQuality, Items[0].Quality);
         }
     }
 }
