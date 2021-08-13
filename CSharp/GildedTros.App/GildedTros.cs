@@ -30,37 +30,29 @@ namespace GildedTros.App
             bool doesItemDegrade = !item.Name.Equals(GOOD_WINE) && !item.Name.Equals(KEYCHAIN) && !BACKSTAGE_PASSES.Contains(item.Name);
             bool isItemExpired = item.SellIn < 1;
             bool doesSellInDecrease = !item.Name.Equals(KEYCHAIN);
-            bool isSmelly = SMELLY_ITEMS.Contains(item.Name);
 
             if (doesItemDegrade)
             {
-                int degradeRate = isSmelly ? -2 : -1;
-                if (isItemExpired)
-                {
-                    updateItemQuality(item, 2*degradeRate);
-                }
-                else
-                {
-                    updateItemQuality(item, degradeRate);
-                }
+                int degradeRate = GetDegradeRate(item, isItemExpired);
+                UpdateItemQuality(item, degradeRate);
             }
 
             else if(item.Name == GOOD_WINE)
             {
-                if (isItemExpired) updateItemQuality(item,2);
-                else updateItemQuality(item,1);
+                int adjustment = isItemExpired ? 2 : 1;
+                UpdateItemQuality(item,adjustment);
             }
 
             else if (BACKSTAGE_PASSES.Contains(item.Name))
             {
-                updateItemQuality(item, 1);
+                UpdateItemQuality(item, 1);
                 if (item.SellIn < 11)
                 {
-                    updateItemQuality(item, 1);
+                    UpdateItemQuality(item, 1);
                 }
                 if (item.SellIn < 6)
                 {
-                    updateItemQuality(item, 1);
+                    UpdateItemQuality(item, 1);
                 }
                 if (isItemExpired)
                 {
@@ -74,7 +66,15 @@ namespace GildedTros.App
             }
         }
 
-        private void updateItemQuality(Item item, int adjustment)
+        private int GetDegradeRate(Item item, bool isItemExpired)
+        {
+            int degradeRate = -1;
+            if (SMELLY_ITEMS.Contains(item.Name)) degradeRate = degradeRate * 2;
+            if (isItemExpired) degradeRate = degradeRate * 2;
+            return degradeRate;
+        }
+
+        private void UpdateItemQuality(Item item, int adjustment)
         {
             item.Quality = item.Quality + adjustment;
             if (item.Quality > 50) item.Quality = 50;
