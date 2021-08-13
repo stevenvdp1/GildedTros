@@ -34,7 +34,7 @@ namespace GildedTros.App
         //Smelly items TESTS:
         //degrade in Quality twice as fast as normal items
         [InlineData("Duplicate Code", 10, 10, 9, 8)]
-        [InlineData("Duplicate Code", 0, 10, -1, 4)]
+        [InlineData("Duplicate Code", 0, 10, -1, 6)]
         public void UpdateQuality(string name, int sellIn, int quality, int expectedSellIn, int expectedQuality)
         {
             IList<Item> Items = new List<Item> { new Item { Name = name, SellIn = sellIn, Quality = quality } };

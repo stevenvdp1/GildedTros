@@ -29,47 +29,46 @@ namespace GildedTros.App
         {
             bool doesItemDegrade = !item.Name.Equals(GOOD_WINE) && !item.Name.Equals(KEYCHAIN) && !BACKSTAGE_PASSES.Contains(item.Name);
             bool isItemExpired = item.SellIn < 1;
-            bool decreaseSellIn = !item.Name.Equals(KEYCHAIN);
+            bool doesSellInDecrease = !item.Name.Equals(KEYCHAIN);
+            bool isSmelly = SMELLY_ITEMS.Contains(item.Name);
 
             if (doesItemDegrade)
             {
+                int degradeRate = isSmelly ? -2 : -1;
                 if (isItemExpired)
                 {
-                    updateItemQuality(item, -2);
+                    updateItemQuality(item, 2*degradeRate);
                 }
                 else
                 {
-                    updateItemQuality(item, -1);
+                    updateItemQuality(item, degradeRate);
                 }
             }
 
-            if(item.Name == GOOD_WINE)
+            else if(item.Name == GOOD_WINE)
             {
                 if (isItemExpired) updateItemQuality(item,2);
                 else updateItemQuality(item,1);
             }
 
-            if (BACKSTAGE_PASSES.Contains(item.Name))
+            else if (BACKSTAGE_PASSES.Contains(item.Name))
             {
+                updateItemQuality(item, 1);
+                if (item.SellIn < 11)
+                {
+                    updateItemQuality(item, 1);
+                }
+                if (item.SellIn < 6)
+                {
+                    updateItemQuality(item, 1);
+                }
                 if (isItemExpired)
                 {
                     item.Quality = 0;
                 }
-                else
-                {
-                    updateItemQuality(item, 1);
-                    if (item.SellIn < 11)
-                    {
-                        updateItemQuality(item, 1);
-                    }
-                    if (item.SellIn < 6)
-                    {
-                        updateItemQuality(item, 1);
-                    }
-                }
             }
 
-            if (decreaseSellIn)
+            if (doesSellInDecrease)
             {
                 item.SellIn--;
             }
