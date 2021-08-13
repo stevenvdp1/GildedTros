@@ -20,12 +20,12 @@ namespace GildedTros.App
         {
             foreach (Item item in Items)
             {
-                UpdateItemQuality(item);
+                UpdateItem(item);
             }
         }
 
 
-        public void UpdateItemQuality(Item item)
+        private void UpdateItem(Item item)
         {
             bool doesItemDegrade = !item.Name.Equals(GOOD_WINE) && !item.Name.Equals(KEYCHAIN) && !BACKSTAGE_PASSES.Contains(item.Name);
             bool isItemExpired = item.SellIn < 1;
@@ -35,22 +35,18 @@ namespace GildedTros.App
             {
                 if (isItemExpired)
                 {
-                    item.Quality = item.Quality - 2;
+                    updateItemQuality(item, -2);
                 }
                 else
                 {
-                    item.Quality = item.Quality - 1;
+                    updateItemQuality(item, -1);
                 }
-
-                if (item.Quality < 0) item.Quality = 0;
             }
 
             if(item.Name == GOOD_WINE)
             {
-                if (isItemExpired) item.Quality = item.Quality + 2;
-                else item.Quality = item.Quality + 1;
-
-                if (item.Quality > 50) item.Quality = 50; 
+                if (isItemExpired) updateItemQuality(item,2);
+                else updateItemQuality(item,1);
             }
 
             if (BACKSTAGE_PASSES.Contains(item.Name))
@@ -61,14 +57,14 @@ namespace GildedTros.App
                 }
                 else
                 {
-                    item.Quality = item.Quality + 1;
+                    updateItemQuality(item, 1);
                     if (item.SellIn < 11)
                     {
-                        item.Quality = item.Quality + 1;
+                        updateItemQuality(item, 1);
                     }
                     if (item.SellIn < 6)
                     {
-                        item.Quality = item.Quality + 1;
+                        updateItemQuality(item, 1);
                     }
                 }
             }
@@ -78,5 +74,13 @@ namespace GildedTros.App
                 item.SellIn--;
             }
         }
+
+        private void updateItemQuality(Item item, int adjustment)
+        {
+            item.Quality = item.Quality + adjustment;
+            if (item.Quality > 50) item.Quality = 50;
+            if (item.Quality < 0) item.Quality = 0;
+        }
+
     }
 }
