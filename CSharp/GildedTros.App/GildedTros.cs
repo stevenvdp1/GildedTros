@@ -27,74 +27,55 @@ namespace GildedTros.App
 
         public void UpdateItemQuality(Item item)
         {
-            if (item.Name != GOOD_WINE && !BACKSTAGE_PASSES.Contains(item.Name))
+            bool doesItemDegrade = !item.Name.Equals(GOOD_WINE) && !item.Name.Equals(KEYCHAIN) && !BACKSTAGE_PASSES.Contains(item.Name);
+            bool isItemExpired = item.SellIn < 1;
+            bool decreaseSellIn = !item.Name.Equals(KEYCHAIN);
+
+            if (doesItemDegrade)
             {
-                if (item.Quality > 0)
+                if (isItemExpired)
                 {
-                    if (item.Name != KEYCHAIN)
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-
-                    if (BACKSTAGE_PASSES.Contains(item.Name))
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (item.Name != KEYCHAIN)
-            {
-                item.SellIn = item.SellIn - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != GOOD_WINE)
-                {
-                    if (!BACKSTAGE_PASSES.Contains(item.Name))
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != KEYCHAIN)
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
+                    item.Quality = item.Quality - 2;
                 }
                 else
                 {
-                    if (item.Quality < 50)
+                    item.Quality = item.Quality - 1;
+                }
+
+                if (item.Quality < 0) item.Quality = 0;
+            }
+
+            if(item.Name == GOOD_WINE)
+            {
+                if (isItemExpired) item.Quality = item.Quality + 2;
+                else item.Quality = item.Quality + 1;
+
+                if (item.Quality > 50) item.Quality = 50; 
+            }
+
+            if (BACKSTAGE_PASSES.Contains(item.Name))
+            {
+                if (isItemExpired)
+                {
+                    item.Quality = 0;
+                }
+                else
+                {
+                    item.Quality = item.Quality + 1;
+                    if (item.SellIn < 11)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
+                    if (item.SellIn < 6)
                     {
                         item.Quality = item.Quality + 1;
                     }
                 }
+            }
+
+            if (decreaseSellIn)
+            {
+                item.SellIn--;
             }
         }
     }
